@@ -3,6 +3,7 @@
     require_once "./clases/profesor.php";
     require_once "./clases/aula.php";
     require_once "./clases/instituto.php";
+    require_once "./clases/persona.php";
 
     $alu1 = new Alumno("Marina", "Meza", "F", 102315);
     $alu2 = new Alumno("Gabriel", "Mendoza", "M", 102314);
@@ -19,6 +20,7 @@
     $pro3 = new Profesor("Yanina", "López", "F", 102154);
     $pro4 = new Profesor("Maximiliano", "Neiner", "M", 102145);
     $pro5 = new Profesor("Enrique", "Prats", "M", 102531);
+    $pro6 = new Profesor("Pepe", "Piero", "M", 120153);
     $aul1 = new Aula("1ºA", $pro3);
     $aul2 = new Aula("1ºB", $pro3);
     $aul3 = new Aula("1ºC", $pro2);
@@ -29,6 +31,7 @@
     $aul8 = new Aula("3ºB", $pro5);
     $aul9 = new Aula("4ºA", $pro1);
     $aul10 = new Aula("4ºB", $pro4);
+    $aul11 = new Aula("5ºA", $pro6);
     $aul1->CargarAlumno($alu1);
     $aul1->CargarAlumno($alu2);
     $aul2->CargarAlumno($alu2);
@@ -63,8 +66,27 @@
     $aul10->CargarAlumno($alu5);
     $aul10->CargarAlumno($alu8);
     $aul10->CargarAlumno($alu10);
+    $aul11->CargarAlumno($alu3);
+    $aul11->CargarAlumno($alu8);
     $ins1 = new Instituto("Los Pitagoricos");
+    $ins1->CargarAula($aul1);
+    $ins1->CargarAula($aul2);
+    $ins1->CargarAula($aul3);
     $ins1->CargarAula($aul4);
+    $ins1->CargarAula($aul5);
+    $ins1->CargarAula($aul6);
+    $ins1->CargarAula($aul7);
+    $ins1->CargarAula($aul8);
+    $ins1->CargarAula($aul9);
+    $ins1->CargarAula($aul10);
+    $ins1->CargarAula($aul11);
 
-    echo $ins1->BuscarAlumnoPorAula("Pepe");
+    /*echo $ins1->BuscarAlumnoPorAula("gómez");
+    echo "<br/><br/>";
+    echo $ins1->BuscarAlumnoPorLibreta(102153);
+    echo "<br/><br/>";
+    echo $ins1->BuscarProfesorPorLegajo(102145);*/
+    //echo $ins1->CantidadAulasPorLibreta(102154);
+    //echo $aul3->MostrarPersonas();
+    echo $ins1->BuscarPersonaPorAula("meza");
 ?>

@@ -11,6 +11,16 @@
             $this->_legajo = $legajo;
         }
 
+        public function GetLegajo()
+        {
+            return $this->_legajo;
+        }
+
+        public function GetApellido()
+        {
+            return $this->_apellido;
+        }
+
         public function MostrarDatos()
         {
             $cadena = "";

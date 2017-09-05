@@ -21,6 +21,11 @@
             return $this->_apellido;
         }
 
+        public function GetNroLibreta()
+        {
+            return $this->_nroLibreta;
+        }
+
         public function MostrarDatos()
         {
             $cadena = "";

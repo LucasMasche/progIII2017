@@ -25,6 +25,11 @@
             return $this->_alumnos;
         }
 
+        public function GetProfesor()
+        {
+            return $this->_profesor;
+        }
+
         public function MostrarPersonas()
         {
             $cadena = "";

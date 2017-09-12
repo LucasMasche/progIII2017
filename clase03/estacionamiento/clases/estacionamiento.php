@@ -9,7 +9,7 @@
             */
             //var_dump($unAuto);    //para saber si llega el objeto
             $archivo = fopen("./archivos/estacionados.txt", "a");
-            $renglon = $unAuto->patente."-".$unAuto->fechaIngreso."\n";
+            $renglon = $unAuto->patente."_".$unAuto->fechaIngreso."\n";
             fwrite($archivo, $renglon);
         }
 
@@ -24,7 +24,16 @@
             6-Guardar facturados
             */
             $estacionados = Estacionamiento::LeerEstacionados();
-            var_dump($estacionados);
+            //var_dump($estacionados);
+            //verifico que esté en el estacionamiento por la patente
+            if (Estacionamiento::EstaEstacionado($estacionados, $unAuto))
+            {
+                $costo = Estacionamiento::CalcularCosto($unAuto);
+                Estacionamiento::QuitarDeEstacionados($estacionados, $unAuto);
+                Estacionamiento::GuardarFacturados($unAuto, $costo);
+                return true;
+            }
+            return false;
         }
 
         private static function LeerEstacionados()
@@ -34,10 +43,55 @@
             while (!feof($archivo))
             {
                 $renglon = fgets($archivo);
-                $vehiculo = explode("-", $renglon);
-                array_push($arrayVehiculos, $vehiculo);
+                //evito que agregue al array el último renglón vacío
+                if ($renglon != null)
+                {
+                    $vehiculo = explode("_", $renglon);
+                    array_push($arrayVehiculos, $vehiculo);
+                }
             }
             return $arrayVehiculos;
+        }
+
+        private static function EstaEstacionado($arrayEstacionados, $unAuto)
+        {
+            foreach ($arrayEstacionados as $autoEstacionado)
+            {
+                if ($unAuto->patente == $autoEstacionado[0])
+                    return true;
+            }
+            return false;
+        }
+
+        private static function CalcularCosto($unAuto)
+        {
+            $unixIngreso = strtotime($unAuto->fechaIngreso);
+            $unixEgreso = strtotime(date("Y-m-d H:i:s"));
+            $segundosEstacionado = $unixEgreso - $unixIngreso;
+            $costo = $segundosEstacionado * $unAuto->importe;
+            return $costo;
+        }
+
+        private static function QuitarDeEstacionados($arrayEstacionados, $unAuto)
+        {
+            $archivo = fopen("./archivos/estacionados.txt", "w");
+            foreach ($arrayEstacionados as $autoEstacionado)
+            {
+                if ($autoEstacionado[0] != $unAuto->patente)
+                {
+                    $renglon = $autoEstacionado[0]."_".$autoEstacionado[1];
+                    fwrite($archivo, $renglon);
+                }
+            }
+            return null;
+        }
+
+        private static function GuardarFacturados($unAuto, $costo)
+        {
+            $archivo = fopen("./archivos/facturados.txt", "a");
+            $renglon = $unAuto->patente."_".$unAuto->fechaIngreso."_".date("Y-m-d H:i:s")."_".$costo."\n";
+            fwrite($archivo, $renglon);
+            return null;
         }
     }
 ?>

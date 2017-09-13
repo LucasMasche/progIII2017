@@ -23,14 +23,14 @@
             5-Guardar estacionados.txt
             6-Guardar facturados
             */
-            $estacionados = Estacionamiento::LeerEstacionados();
+            $estacionados = self::LeerEstacionados();
             //var_dump($estacionados);
             //verifico que esté en el estacionamiento por la patente
-            if (Estacionamiento::EstaEstacionado($estacionados, $unAuto))
+            if (self::EstaEstacionado($estacionados, $unAuto))
             {
-                $costo = Estacionamiento::CalcularCosto($unAuto);
-                Estacionamiento::QuitarDeEstacionados($estacionados, $unAuto);
-                Estacionamiento::GuardarFacturados($unAuto, $costo);
+                $costo = self::CalcularCosto($unAuto);
+                self::QuitarDeEstacionados($estacionados, $unAuto);
+                self::GuardarFacturados($unAuto, $costo);
                 return true;
             }
             return false;

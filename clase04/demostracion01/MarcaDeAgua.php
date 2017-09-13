@@ -1,7 +1,8 @@
 <?php
-var_dump($_FILES);
-die;
+//var_dump($_FILES);
+
 $destino = "./fotoUno.png";
+//subo el archivo
 //1048576 bytes = 1 MB
 if ($_FILES["foto"]["type"] == "image/png" && $_FILES["foto"]["size"] <= 1048576 && $_FILES["foto"]["size"] > filesize("./fotoDos.png"))
 {
